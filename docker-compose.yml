@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  route-service:
+    build: .
+    environment:
+      - VIPER_USER=${VIPER_USER}
+      - VIPER_PASSWORD=${VIPER_PASSWORD}
+      - DB_URL=${DB_URL}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_TO=${EMAIL_TO}
