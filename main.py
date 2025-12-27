@@ -15,6 +15,7 @@ password = os.getenv("VIPER_PASSWORD")
 db_url = os.getenv("DB_URL")
 if user is None:
     print("No se ha encontrado el usuario de VIPER en el archivo .env")
+    exit(1)
 if password is None:
     print("No se ha encontrado la contraseña de VIPER en el archivo .env")
     exit(1)
