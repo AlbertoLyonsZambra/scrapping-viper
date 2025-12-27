@@ -19,14 +19,20 @@ jobs:
           python-version: '3.12'
 
       - name: Install system dependencies
+        env:
+          TZ: America/Santiago
+          DEBIAN_FRONTEND: noninteractive
         run: |
           sudo apt-get update
           sudo apt-get install -y tzdata
           sudo ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
           sudo dpkg-reconfigure -f noninteractive tzdata
-          sudo apt-get update
-          sudo apt-get install -y chromium-driver chromium
-
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+      - name: Setup Chrome symlink
+        run: |
+          sudo ln -s /usr/bin/chromium-browser /usr/bin/chromium
+          which chromium
+          chromium --version
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
