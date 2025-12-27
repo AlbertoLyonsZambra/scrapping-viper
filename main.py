@@ -13,9 +13,6 @@ load_dotenv()
 user = os.getenv("VIPER_USER")
 password = os.getenv("VIPER_PASSWORD")
 db_url = os.getenv("DB_URL")
-if db_url is None:
-    print("No se ha encontrado la URL de la base de datos en el archivo .env")
-    exit(1)
 if user is None:
     print("No se ha encontrado el usuario de VIPER en el archivo .env")
 if password is None:
@@ -23,14 +20,16 @@ if password is None:
     exit(1)
 email = os.getenv("EMAIL")
 email_password = os.getenv("EMAIL_PASSWORD")
-to = os.getenv("EMAIL_TO")
-if email is None or email_password is None or to is None:
-    print("No se han encontrado las credenciales de correo electrónico en el archivo .env")
-    exit(1)
-
+to = os.getenv("EMAIL_TO")    
 df = ScrappingViper.main(user, password)
 if df is not None:
-    DataContext.main(db_url,df)
-    print("Guardado con éxito en la base de datos")
-    MailSender.main(email, email_password, to, df)
-    print("Se ha enviado el correo con éxito")
+    if db_url is not None:
+        DataContext.main(db_url,df)
+        print("Guardado con éxito en la base de datos")
+    else:
+        print("No se ha encontrado la URL de la base de datos en el archivo .env")
+    if email is None or email_password is None or to is None:
+        MailSender.main(email, email_password, to, df)
+        print("Se ha enviado el correo con éxito")
+    else:
+        print("No se ha encontrado la configuración de correo en el archivo .env")
