@@ -7,12 +7,12 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.edge.service import Service
-#from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.edge.service import Service
+from selenium.webdriver.chrome.service import Service
 
 
-#options = webdriver.ChromeOptions()
-options = webdriver.EdgeOptions()
+options = webdriver.ChromeOptions()
+#options = webdriver.EdgeOptions()
 
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
