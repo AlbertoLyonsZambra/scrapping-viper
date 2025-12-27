@@ -24,7 +24,7 @@ jobs:
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
     - name: Docker Build
-      run: docker build -t scrapping-viper-app -f dockerfile .
+      run: docker build -t scrapping-viper-app -f Dockerfile .
     - name: Docker Tag
       run: docker tag scrapping-viper-app "${{ secrets.DOCKERHUB_USERNAME }}"/scrapping-viper-app
     - name: Docker push
