@@ -2,7 +2,7 @@ name: Scheduled Scrapping Task
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 jobs:
@@ -30,8 +30,12 @@ jobs:
           sudo apt-get install -y chromium-browser chromium-chromedriver
       - name: Setup Chrome symlink
         run: |
+          if [ -L /usr/bin/chromium ]; then
+            echo "Symlink already exists, removing..."
+            sudo rm /usr/bin/chromium
+          fi
           sudo ln -s /usr/bin/chromium-browser /usr/bin/chromium
-          which chromium
+          ls -la /usr/bin/chromium*
           chromium --version
       - name: Install Python dependencies
         run: pip install -r requirements.txt
