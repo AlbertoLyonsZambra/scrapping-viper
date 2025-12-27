@@ -8,7 +8,7 @@ ENV TZ=America/Santiago
 RUN apt-get update && apt-get install -y tzdata && \
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
-RUN apt-get update && apt-get install -y chromium-driver chromium
+RUN apt-get update && apt-get install -y chromium-browser chromium-chromedriver
 
 RUN pip install --no-cache-dir -r requirements.txt
 
