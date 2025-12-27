@@ -12,7 +12,6 @@ from selenium.webdriver.chrome.service import Service
 
 
 options = webdriver.ChromeOptions()
-options.binary_location = '/usr/bin/chromium-browser'
 #options = webdriver.EdgeOptions()
 
 options.add_argument('--headless')
@@ -25,8 +24,12 @@ options.add_argument('--enable-chrome-browser-cloud-management')
 #BASE_DIR = os.path.join(Path.home(), "Documents")
 #driver_path = os.path.join(BASE_DIR, "..", "msedgedriver.exe")
 #service = Service(executable_path=driver_path)
-options.binary_location = "/usr/bin/chromium"
-service = Service("/usr/bin/chromedriver")
+
+#options.binary_location = "/usr/bin/chromium"
+#service = Service("/usr/bin/chromedriver")
+
+options.binary_location = '/usr/bin/chromium-browser'
+service = Service('/usr/bin/chromedriver')
 
 
 #driver = webdriver.Edge(service=service, options=options) # Modificar para el que use
