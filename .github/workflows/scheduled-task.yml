@@ -18,6 +18,9 @@ jobs:
         run: |
           docker system prune -af
           docker builder prune -af
+          docker rm -f scrapping-viper-container scrapping-viper-runner || true
+          docker rmi -f scrapping-viper yymx || true
+          docker system prune -af
 
       - name: Build Docker image
         run: docker build --no-cache -t alyons/scrapping-task -f Dockerfile .
