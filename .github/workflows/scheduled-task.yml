@@ -1,36 +1,40 @@
-name: Scheduled Task
+name: Scheduled Scrapping Task
 
 on:
   schedule:
     - cron: '0 9 * * *'
-  workflow_dispatch: 
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
-  run-task:
+  run-script:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Docker cleanup
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install system dependencies
         run: |
-          docker system prune -af
-          docker builder prune -af
-          docker rm -f scrapping-viper-container scrapping-viper-runner || true
-          docker rmi -f scrapping-viper yymx || true
-          docker system prune -af
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
 
-      - name: Build Docker image
-        run: docker build --no-cache -t alyons/scrapping-task -f Dockerfile .
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
 
-      - name: Show Dockerfile
-        run: cat Dockerfile
-      - name: List files
-        run: ls -la
-      - name: List docker images
-        run: docker images
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          VIPER_USER=${{ secrets.VIPER_USER }}
+          VIPER_PASSWORD=${{ secrets.VIPER_PASSWORD }}
+          EMAIL=${{ secrets.EMAIL }}
+          EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO=${{ secrets.EMAIL_TO }}
+          EOF
 
-      - name: Run container
-        run: docker run -d --name alyons/scrapping-task -e VIPER_USER=${{ secrets.VIPER_USER }} -e VIPER_PASSWORD=${{ secrets.VIPER_PASSWORD }} -e DB_URL=${{ secrets.DB_URL }} -e EMAIL=${{ secrets.EMAIL }} -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} -e EMAIL_TO=${{ secrets.EMAIL_TO }}
+      - name: Run scrapping script
+        run: python main.py
