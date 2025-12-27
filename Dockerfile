@@ -12,4 +12,5 @@ RUN apt-get update && apt-get install -y chromium-driver chromium
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "main.py"]
+ENTRYPOINT ["python"]
+CMD ["main.py"]
