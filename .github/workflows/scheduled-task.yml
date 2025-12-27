@@ -14,9 +14,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+      - name: Docker cleanup
+        run: |
+          docker system prune -af
+          docker builder prune -af
+
       - name: Build Docker image
-        run: docker build -t yymx -f Dockerfile .
-      
+        run: docker build --no-cache -t alyons/scrapping-task -f Dockerfile .
+
+      - name: Show Dockerfile
+        run: cat Dockerfile
+      - name: List files
+        run: ls -la
+      - name: List docker images
+        run: docker images
+        
       - name: Run container
-        run: docker run --rm -e VIPER_USER=${{ secrets.VIPER_USER }} -e VIPER_PASSWORD=${{ secrets.VIPER_PASSWORD }} -e DB_URL=${{ secrets.DB_URL }} -e EMAIL=${{ secrets.EMAIL }} -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} -e EMAIL_TO=${{ secrets.EMAIL_TO }} yymx
+        run: docker run --rm -e VIPER_USER=${{ secrets.VIPER_USER }} -e VIPER_PASSWORD=${{ secrets.VIPER_PASSWORD }} -e DB_URL=${{ secrets.DB_URL }} -e EMAIL=${{ secrets.EMAIL }} -e EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} -e EMAIL_TO=${{ secrets.EMAIL_TO }} alyons/scrapping-task
