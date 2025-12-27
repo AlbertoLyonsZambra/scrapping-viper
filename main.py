@@ -31,6 +31,5 @@ if df is not None:
         print("No se ha encontrado la URL de la base de datos en el archivo .env")
     if email is not None and email_password is not  None and to is not None:
         MailSender.main(email, email_password, to, df)
-        print("Se ha enviado el correo con éxito")
     else:
         print("No se ha encontrado la configuración de correo en el archivo .env")
