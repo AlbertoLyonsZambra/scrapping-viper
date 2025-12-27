@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.service import Service
 
 
 options = webdriver.ChromeOptions()
+options.binary_location = '/usr/bin/chromium-browser'
 #options = webdriver.EdgeOptions()
 
 options.add_argument('--headless')
