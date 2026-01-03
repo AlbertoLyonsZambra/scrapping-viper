@@ -21,7 +21,7 @@ def SendMail(email, email_password, body, subject, to):
         servidor.login(email, email_password)
         
         texto = message.as_string()
-        servidor.sendmail(email, to, texto)
+        servidor.sendmail(email, message["To"].split(","), texto)
         print("Correo enviado con éxito")
     except Exception as e:
         print(f"Error al enviar correo: {e}")

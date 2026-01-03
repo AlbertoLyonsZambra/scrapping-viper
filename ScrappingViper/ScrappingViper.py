@@ -25,11 +25,10 @@ options.add_argument('--enable-chrome-browser-cloud-management')
 #driver_path = os.path.join(BASE_DIR, "..", "msedgedriver.exe")
 #service = Service(executable_path=driver_path)
 
-#options.binary_location = "/usr/bin/chromium"
-#service = Service("/usr/bin/chromedriver")
 
-options.binary_location = '/usr/bin/chromium-browser'
-service = Service('/usr/bin/chromedriver')
+service = Service("/usr/bin/chromedriver") 
+#options.binary_location = "/usr/bin/chromium" # Option for docker
+options.binary_location = '/usr/bin/chromium-browser' # Option for git actions
 
 
 #driver = webdriver.Edge(service=service, options=options) # Modificar para el que use
